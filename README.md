@@ -2,6 +2,6 @@
 
 [website](https://www.eternalchaos.xyz)
 
-[![Visitor Counter for DanielMcSheehy](https://pimp-my-readme.webapp.io/pimp-my-readme/visitor-counter?page=DanielMcSheehy)}](https://pimp-my-readme.webapp.io)
+[![Visitor Counter for DanielMcSheehy](https://pimp-my-readme.webapp.io/pimp-my-readme/visitor-counter?page=DanielMcSheehy)](https://pimp-my-readme.webapp.io)
 
 [![GoLang_ReactJS_JavaScript_](https://pimp-my-readme.webapp.io/pimp-my-readme/technology?technology=GoLang_ReactJS_JavaScript_)](https://pimp-my-readme.webapp.io)
