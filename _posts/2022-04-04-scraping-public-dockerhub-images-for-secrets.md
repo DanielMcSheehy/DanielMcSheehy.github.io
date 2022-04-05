@@ -113,5 +113,5 @@ CASSANDRA_KEYSTORE_LOCATION=/bitnami/cassandra/secrets/keystore
 spring.datasource.password=root123
 
 
-### [The Code](https://github.com/DanielMcSheehy/DockerHubSecretScraper)
+## [The Code](https://github.com/DanielMcSheehy/DockerHubSecretScraper)
 
