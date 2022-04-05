@@ -37,7 +37,7 @@ for secrets. The ones below were of particular intrest to me.
 
 Using Rust, I found a pretty good regex library that could find the above given text. 
 
-```rust 
+{% highlight rust %}
 const RULES: &[(&str, &str)] = &[
         ("Slack Token", "(xox[p|b|o|a]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})"),
         ("RSA private key", "-----BEGIN RSA PRIVATE KEY-----"),
@@ -61,7 +61,8 @@ const RULES: &[(&str, &str)] = &[
     static REGEX_SET: Lazy<RegexSet> = Lazy::new(|| {
         RegexSet::new(RULES.iter().map(|&(_, regex)| regex)).expect("All regexes should be valid")
     });
-```
+{% endhighlight %}
+
 The next step was to fetch the Dockerhub api for new public images, build and run them, and then scan the environment variables. 
 This should repeat every few seconds. 
 
