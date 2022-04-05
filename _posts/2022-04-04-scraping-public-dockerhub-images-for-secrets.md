@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Let customers install your integrations using Terraform
-description: How to let customers manage permissions and third party integrations with Terraform
+title: Scraping public dockerhub images for secrets
+description: An experiment on scraping docker images that were possibly accidently made public. 
 summary: 
-tags: [terraform]
+tags: [Docker, Rust]
 ---
 After browsing [dockerhub](https://dockerhub.com), I noticed a section called "recently updated". 
 This section includes public images for hello world projects, commercial software, and occasionally
