@@ -15,8 +15,6 @@ author:
   url: #yoururl
 permalink: pretty
 
-markdown: redcarpet
-
 baseurl: ""
 
 highlighter: rouge
