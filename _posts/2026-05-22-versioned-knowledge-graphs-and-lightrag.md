@@ -17,13 +17,16 @@ Instead of pointing a vector store at a mutable folder of files, I built `Docume
 
 Every file is hashed on upload and stored by its content digest. A `DocumentSetVersion` is an immutable manifest mapping `(path → blob_digest)` with composite `(org_id, id)` foreign keys enforcing tenant isolation at the database layer.
 
-```
-DocumentSet ("spot-maintenance-sops")
- ├── v1-initial          ─┬─► /safety/lockout.md  ──► sha256:9f86d08...
- │                        └─► /motors/thermal.md  ──► sha256:4b22777...
- └── v2-updated-thermal  ─┬─► /safety/lockout.md  ──► sha256:9f86d08... (shared blob)
-                          └─► /motors/thermal.md  ──► sha256:e3b0c44... (new blob)
-```
+<figure class="diagram-figure">
+  <a href="/assets/diagrams/lightrag-pipeline.html" target="_blank">
+    <img class="diagram-light" src="/assets/diagrams/lightrag-pipeline.light.png" alt="Versioned Document Sets and LightRAG Pipeline">
+    <img class="diagram-dark" src="/assets/diagrams/lightrag-pipeline.dark.png" alt="Versioned Document Sets and LightRAG Pipeline">
+  </a>
+  <figcaption>
+    <span>Data flow from versioned DocumentSet manifests and content-addressed MinIO blobs through LightRAG streaming.</span>
+    <a href="/assets/diagrams/lightrag-pipeline.html" target="_blank">Open interactive diagram ↗</a>
+  </figcaption>
+</figure>
 
 Because identical files share the same blob across versions, storage cost scales linearly with *changed* files rather than version count. More importantly, downstream consumers — LightRAG knowledge graph builds, workflow nodes, and evaluation datasets — pin to a specific `(documentSetId, versionId)`. When a document set updates, we run a delta sync against the previous manifest instead of rebuilding the entire knowledge graph from scratch.
 
@@ -45,3 +48,5 @@ Once a knowledge graph has a few hundred entities and edges, a static node-link 
 I added an opt-in heat-map overlay to the knowledge graph canvas. Every query updates a heat score on both the retrieved nodes *and* the edges connecting two participating entities, with a soft exponential decay over time.
 
 Because retrieval distributions are heavily skewed — a handful of hub entities get pulled into almost every context window — a linear color scale makes 95% of the graph look cold. Adding a gamma sensitivity curve (`display = Math.pow(heat, gamma)`, defaulting to `gamma = 0.5`) compressed the dynamic range so mid-traffic subgraphs glow clearly without washing out the hot spots.
+
+![Knowledge graph retrieval heat-map overlay with sensitivity slider](https://github.com/user-attachments/assets/f5038da5-7159-4838-b858-6e740b682553)

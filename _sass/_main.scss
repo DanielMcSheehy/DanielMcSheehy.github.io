@@ -395,3 +395,35 @@ section {
 figcaption {
 	font-size: smaller;
 }
+
+.diagram-figure {
+	margin: 1.5rem 0;
+	border: 1px solid var(--light-text-color);
+	border-radius: 6px;
+	overflow: hidden;
+
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	figcaption {
+		padding: 0.5rem 0.75rem;
+		color: var(--medium-text-color);
+		background: var(--very-light-text-color);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+}
+
+html:not([data-theme="dark"]) .diagram-dark {
+	display: none;
+}
+
+html[data-theme="dark"] .diagram-light {
+	display: none;
+}

@@ -11,6 +11,17 @@ I built Formant's self-serve analytics stack — first on Snowflake, and later m
 
 Here are a few of the more interesting problems that came up along the way: row-level security over arbitrary tag sets, type coercion traps, and a caching mistake that quietly hurt the rest of the platform.
 
+<figure class="diagram-figure">
+  <a href="/assets/diagrams/clickhouse-rls-pipeline.html" target="_blank">
+    <img class="diagram-light" src="/assets/diagrams/clickhouse-rls-pipeline.light.png" alt="ClickHouse Tag-Set Row-Level Security and Local LRU Pipeline">
+    <img class="diagram-dark" src="/assets/diagrams/clickhouse-rls-pipeline.dark.png" alt="ClickHouse Tag-Set Row-Level Security and Local LRU Pipeline">
+  </a>
+  <figcaption>
+    <span>Request flow through the per-pod LRU cache, matchesTagSets UDF rewrite, and ClickHouse type coercer.</span>
+    <a href="/assets/diagrams/clickhouse-rls-pipeline.html" target="_blank">Open interactive diagram ↗</a>
+  </figcaption>
+</figure>
+
 ### Row-level security over hierarchical tag sets
 
 In Formant, access control isn't a simple `WHERE org_id = ?`. Every device and telemetry stream has a map of tags (`Map(String, String)` in ClickHouse), and a user's role grants access to a *set of tag sets* — including wildcards like `location:*`, `*:production`, or `*:*`.

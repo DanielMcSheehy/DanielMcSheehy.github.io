@@ -19,21 +19,16 @@ Early on, local sandboxes ran as child processes under the pod user with scrubbe
 
 I hardened the runner using platform-native sandboxing (`bubblewrap` on Linux pods, `seatbelt` on macOS) with network access completely disabled (`allowNetwork: false`). To let sandboxed code still call MCP tools without opening any network sockets, the `external_*` tool bridge runs over **stdio JSON-RPC** pipes between the sandbox and the host process:
 
-```
-┌──────────────────────────────────────────────┐
-│ Persistent-Agent Host                        │
-│                                              │
-│  ┌────────────────────────────────────────┐  │
-│  │ bwrap sandbox (--unshare-net)          │  │
-│  │                                        │  │
-│  │  execute_typescript                    │  │
-│  │   ├─► external_take_photo() ──┐        │  │
-│  │   └─► external_llm()        ──┼─ stdio │──┼──► Mediated MCP & LLM Router
-│  └───────────────────────────────┼────────┘  │
-└──────────────────────────────────┼───────────┘
-                                   ▼
-                        MinIO Image Spill (7d TTL)
-```
+<figure class="diagram-figure">
+  <a href="/assets/diagrams/cortex-agent-runtime.html" target="_blank">
+    <img class="diagram-light" src="/assets/diagrams/cortex-agent-runtime.light.png" alt="Cortex Persistent-Agent and Code-Mode Runtime">
+    <img class="diagram-dark" src="/assets/diagrams/cortex-agent-runtime.dark.png" alt="Cortex Persistent-Agent and Code-Mode Runtime">
+  </a>
+  <figcaption>
+    <span>Cortex persistent-agent host with bubblewrap network isolation, stdio JSON-RPC tool mediation, MinIO image spill, and reasoning-aware strategy judge.</span>
+    <a href="/assets/diagrams/cortex-agent-runtime.html" target="_blank">Open interactive diagram ↗</a>
+  </figcaption>
+</figure>
 
 Inside the sandbox, code has pure compute and zero network exfiltration paths. And when an MCP tool returns a 5 MB camera frame, the host intercepts the base64 image before `JSON.stringify`, spills it to MinIO with a 7-day TTL, and rehydrates it just-in-time for a single model look-message so the agent's transcript never OOMs the host.
 

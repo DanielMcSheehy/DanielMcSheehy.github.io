@@ -1,18 +1,18 @@
-site: Asko
-url: #yoururl
-title: Asko
-description: Simple and minimalistic jekyll blogging theme.
+site: Daniel McSheehy
+url: https://danielmcsheehy.github.io
+title: Daniel McSheehy
+description: Software Engineer — robotics, distributed systems, and AI agents.
 googlewebfonts: Fira+Code:wght@400;500;700
 twitter:
-  username: #yourusername
+  username:
   card: summary
-  creator: #yourusername
+  creator:
 author:
-  twitter: #yourusername
-  name: #yourusername
+  twitter:
+  name: Daniel McSheehy
   avatar:
-  email: #youremail
-  url: #yoururl
+  email: danielmcsheehy@protonmail.com
+  url: https://danielmcsheehy.github.io
 permalink: pretty
 
 baseurl: ""
